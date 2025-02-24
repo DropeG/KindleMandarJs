@@ -6,7 +6,13 @@ export function SearchSection() {
 
   const handleSearch = async (searchTerm) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/scrape?req=${encodeURIComponent(searchTerm)}`);
+      const response = await fetch('http://localhost:3000/scrape', {
+        method: 'POST', // Método POST
+        headers: {
+            'Content-Type': 'application/json', // Indica que se envía JSON
+        },
+        body: JSON.stringify({ url: searchTerm }), // Envía el término de búsqueda en el cuerpo
+    });
       const data = await response.json();
       console.log(data);
     } catch (error){
