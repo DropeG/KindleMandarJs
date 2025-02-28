@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 export function ScrollArrow() {
     const scrollToBottom = () => {
         window.scrollTo({
-            top: window.innerHeight,
+            top: document.body.scrollHeight,
             behavior: 'smooth'
         });
     };

@@ -16,7 +16,6 @@ app.post('/scrape', async (req, res) => {
     const { url } = req.body;
     try {
         const results = await scrapeWebsite(url);
-        console.log(results)
         res.json(results);
     } catch (error) {
         console.error('Error scraping website:', error);

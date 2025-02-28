@@ -4,6 +4,7 @@ import {Title} from './components/Title/Title'
 import {Hero} from './components/Hero/Hero'
 import {ScrollArrow} from './components/ScrollArrow/ScrollArrow'
 import {SearchSection} from './components/SearchSection/SearchSection'
+import { DeployTable } from './components/DeployTable/DeployTable'
 import './App.css'
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   }
 
   return (
-    <div className='min-h-screen bg-[#B7E2F3]'> 
+    <div className='min-h-screen bg-[#B7E2F3] h-auto'> 
       <main className='container mx-auto px-4 pt-24 pb-12'>
         <section className='bg-[#B7E2F3]'>
           <Header isLogged={isLogged} onLogout={handleLogout} />
@@ -29,15 +30,16 @@ function App() {
           <ScrollArrow />
         </section>
 
-        <section className='h-screen w-full bg-[#B7E2F3]'>
+        <section className='w-full bg-[#B7E2F3] mt-4'>
           <SearchSection />
         </section>
-       
       </main>
 
 
     </div>
   )
+
+  
 }
 
 export default App

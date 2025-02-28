@@ -23,6 +23,7 @@ export const scrapeWebsite = async (url) => {
                     const book = {
                         title: rowData[0],
                         author: rowData[1],
+                        year: rowData[3],
                         language: rowData[4],
                         ext: rowData[7]
                     };
