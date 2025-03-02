@@ -19,8 +19,6 @@ export function SearchSection() {
       console.log("DATAAAA", data);
       setResults(data)
       
-
-      console.log("TITLE:", title)
     } catch (error){
       console.error("Error fetching data:", error)
     }
@@ -38,7 +36,7 @@ export function SearchSection() {
       </div>
       {/* Tabla con poco margen para que no empuje el buscador */}
       {results.length > 0 && (
-          <div className="w-full max-w-2xl mt-4">
+          <div className="w-full max-w-12xl mt-4">
             <DeployTable results={results} />
           </div>
       )}
