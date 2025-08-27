@@ -4,17 +4,24 @@ import { WelcomeForm } from "./WelcomeForm";
 import { Mail } from 'lucide-react';
 
 export function HeroContent({ onEmailSubmit, isLogged }) {
-  let email = "";
+  const [email, setEmail] = useState('');
 
-  const handleEmail = (email) => {
-    email = email;
+  const handleEmail = (newEmail) => {
+    setEmail(newEmail);
+  }
+
+  const handleSubmit = () => {
+    onEmailSubmit(email);
   }
 
   if (!isLogged) {
     return (
       <div className="flex flex-col justify-center h-full space-y-4 w-[450px]">
         <div>
-          <WelcomeForm onEmailSubmit={onEmailSubmit} isLogged={isLogged} handleEmail={handleEmail} />
+          <WelcomeForm 
+            onEmailSubmit={handleSubmit} 
+            isLogged={isLogged} 
+            handleEmail={handleEmail} />
         </div>
       </div>
     );

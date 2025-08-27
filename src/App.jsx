@@ -9,6 +9,7 @@ import './App.css'
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
+  
 
   const handleLogout = () => {
     setIsLogged(false);
@@ -31,7 +32,7 @@ function App() {
         </section>
 
         <section className='w-full bg-[#B7E2F3] mt-4'>
-          <SearchSection />
+          <SearchSection isLogged={isLogged}/>
         </section>
       </main>
 
