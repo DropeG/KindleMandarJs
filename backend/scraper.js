@@ -21,6 +21,11 @@ export const scrapeWebsite = async (url) => {
                         const imageUrl = $(cell).find('img').attr('src')
                         console.log("Image URL:", imageUrl);
                         return 'https://libgen.gs' + imageUrl
+                    } else if (i==1) {
+                        const firstLink = $(cell).find('a').first();
+                        if (firstLink.length > 0) {
+                            return firstLink.text().trim();
+                        }
                     }
                     return $(cell).text().trim();
                 }).get();
