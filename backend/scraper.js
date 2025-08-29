@@ -1,5 +1,7 @@
 import axios from 'axios';
 import * as cheerio from "cheerio";
+import * as fs from 'fs';
+import * as path from 'path';
 
 export const scrapeWebsite = async (url) => {
         const baseUrl = 'https://libgen.gs/index.php?req=';
@@ -14,40 +16,41 @@ export const scrapeWebsite = async (url) => {
 
             const results = [];
 
+
             for (const element of tbody.find('tr').toArray()){
                 const cells = $(element).find('td')
                 const rowData = cells.map((i, cell) => {
                     if (i==0) {
                         const imageUrl = $(cell).find('img').attr('src')
-                        console.log("Image URL:", imageUrl);
                         return 'https://libgen.gs' + imageUrl
                     } else if (i==1) {
                         const firstLink = $(cell).find('a').first();
                         if (firstLink.length > 0) {
                             return firstLink.text().trim();
                         }
-                    }
+                    } 
                     return $(cell).text().trim();
                 }).get();
 
-                const mirrorLink = cells.eq(10).find('a').filter((i, el) => $(el).text() === '1').attr('href');
+                const mirrorLink = cells.eq(9).find('a').filter((i, el) => $(el).text() === '1').attr('href');
                 let downloadLink = null;
 
-                if (mirrorLink){
-                    const mirrorUrl = 'https://libgen.gs' + mirrorLink;
+                if (mirrorLink) {
                     try {
-                        const {data: mirrorHtml} = await axios.get(mirrorUrl);
+                        const {data: mirrorHtml} = await axios.get('https://libgen.gs' + mirrorLink);
                         const $mirror = cheerio.load(mirrorHtml);
-
                         downloadLink = $mirror('a:contains("GET")').attr('href');
                         if (downloadLink) {
                             downloadLink = 'https://libgen.gs' + downloadLink;
+                            console.log("Download Link disponible:", downloadLink);
                         }
                     } catch (error) {
-                        console.error('Error fetching Mirror 1 page:', error.message)
-                    }
+                        console.error('Error fetching Mirror page:', error.message)
+                        }
                 }
 
+
+                
                 if(rowData.length > 0) {
                         const book = {
                             cover: rowData[0],
@@ -56,6 +59,7 @@ export const scrapeWebsite = async (url) => {
                             year: rowData[4],
                             language: rowData[5],
                             ext: rowData[8],
+                            download: downloadLink
 
 
                         };
@@ -64,7 +68,6 @@ export const scrapeWebsite = async (url) => {
                         }
 
                     }
-                    console.log("ROWDATA:", rowData);
                 };
                 return results;
         } catch (error) {
